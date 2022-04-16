@@ -53,7 +53,7 @@ public class Student {
     public void setPhysicsMark(int physicsMark) {
         if (physicsMark >= 0 && physicsMark < 6) {
             this.physicsMark = physicsMark;
-            averagePhysicsMark += ((float) physicsMark);
+            //averagePhysicsMark += ((float) physicsMark); (for 1 group)
         } else {
             System.out.println("STOP AND RERUN!");
         }
@@ -85,7 +85,12 @@ public class Student {
 
     //count average
     public static float getAveragePhysicsMark() {
-        return (averagePhysicsMark / studentsCount);
+        return (averagePhysicsMark / studentsCount); //for 1 group
+    }
+
+    //get phys mark
+    public int getPhysicsMark() {
+        return physicsMark;
     }
 
     //display all info about student

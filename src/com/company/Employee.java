@@ -23,6 +23,7 @@ public class Employee {
 
     public void setGender(Gender gender) {
         this.gender = gender;
+        //for 1 company (1 fill)
         if (((this.age > 65) && (this.gender == Gender.MALE)) || ((this.age > 60) && (this.gender == Gender.FEMALE))) {
             pensionerCount++;
         }
@@ -48,6 +49,15 @@ public class Employee {
         this.employmentDate = employmentDate;
     }
 
+    public int getAge() {
+        return age;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    //for 1 company
     public static int getPensionerCount() {
         return pensionerCount;
     }

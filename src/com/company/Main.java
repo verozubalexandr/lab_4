@@ -28,15 +28,18 @@ public class Main {
         Student student1 = new Student();
         Student student2 = new Student();
         Student student3 = new Student();
-        fillStudentInfo(student1);
-        fillStudentInfo(student2);
-        fillStudentInfo(student3);
+        Student[] students = new Student[]{student1, student2, student3};
+
+        //fill info
+        for (int i = 0; i < students.length; i++) {
+            fillStudentInfo(students[i]);
+        }
 
         //result
-        System.out.println("Average physics mark pf all students -> " + Student.getAveragePhysicsMark());
-        student1.displayFullInfo();
-        student2.displayFullInfo();
-        student3.displayFullInfo();
+        for (int i = 0; i < students.length; i++) {
+            students[i].displayFullInfo();
+        }
+        System.out.println("Average physics mark of all students -> " + averagePhysicsMark(students));
     }
 
     /**
@@ -54,14 +57,17 @@ public class Main {
     private static void task2() {
         //create
         Employee employee1 = new Employee();
-        fillEmployeeInfo(employee1);
         Employee employee2 = new Employee();
-        fillEmployeeInfo(employee2);
+        Employee[] employees = new Employee[] { employee1, employee2 };
+        for (int i = 0; i < employees.length; i++) {
+            fillEmployeeInfo(employees[i]);
+        }
 
         //result
-        employee1.displayFullInfo();
-        employee2.displayFullInfo();
-        System.out.println(Employee.getPensionerCount());
+        for (int i = 0; i < employees.length; i++) {
+            employees[i].displayFullInfo();
+        }
+        System.out.println("Pensioners -> " + countPensioners(employees));
     }
 
     //fill student info
@@ -75,6 +81,15 @@ public class Main {
         student.setItMark(enterInteger("IT mark"));
     }
 
+    //average physics mark
+    private static float averagePhysicsMark (Student[] students) {
+        float average = 0;
+        for (int i = 0; i < students.length; i++) {
+            average += students[i].getPhysicsMark();
+        }
+        return (average / (students.length));
+    }
+
     //fill employee info
     private static void fillEmployeeInfo(Employee employee) {
         employee.setAge(enterInteger("age"));
@@ -84,6 +99,17 @@ public class Main {
         employee.setPatronymic(enterString("patronymic").toUpperCase().replaceAll("\\s+", ""));
         employee.setPosition(randomPosition());
         employee.setEmploymentDate(String.valueOf(LocalDate.ofEpochDay(ThreadLocalRandom.current().nextInt(40 * 365, 50 * 365))));
+    }
+
+    //count pensioners
+    private static int countPensioners(Employee[] employees) {
+        int pensionersCounter = 0;
+        for (int i = 0; i < employees.length; i++) {
+            if (((employees[i].getAge() > 65) && (employees[i].getGender() == Gender.MALE)) || ((employees[i].getAge() > 60) && (employees[i].getGender() == Gender.FEMALE))) {
+                pensionersCounter++;
+            }
+        }
+        return pensionersCounter;
     }
 
     //random position
@@ -103,7 +129,7 @@ public class Main {
 
     //random gender
     private static Gender randomGender() {
-        if (((int) (Math.random()) * 10) % 2 == 0) {
+        if (1 + ((int) (Math.random() * 2)) == 1) {
             return Gender.MALE;
         } else {
             return Gender.FEMALE;
