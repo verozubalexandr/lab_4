@@ -16,90 +16,66 @@ public class Student {
     public Student() {
     }
 
-    //set last name
     public void setLastName(String lastName) {
-        String regex = "^[\\da-zA-Z_]{2,25}$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(lastName);
-        if (matcher.matches()) {
-            this.lastName = lastName;
-        } else {
-            System.out.println("STOP AND RERUN!");
-        }
+        this.lastName = Utilities.nameFormat(lastName);
     }
 
-    //set year of birth
     public void setYearOfBirth(int yearOfBirth) {
-        if (yearOfBirth > 1900 && yearOfBirth <= 2022) {
-            this.yearOfBirth = yearOfBirth;
-        } else {
-            System.out.println("STOP AND RERUN!");
-        }
+        this.yearOfBirth = yearOfBirth;
     }
 
-    //set group
     public void setGroup(String group) {
-        String regex = "^[A-Z]{2,3}[-][0-9]{3}$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(group);
-        if (matcher.matches()) {
-            this.group = group;
-        } else {
-            System.out.println("STOP AND RERUN!");
-        }
+        this.group = group;
     }
 
-    //set mark
     public void setPhysicsMark(int physicsMark) {
-        if (physicsMark >= 0 && physicsMark < 6) {
-            this.physicsMark = physicsMark;
-            //averagePhysicsMark += ((float) physicsMark); (for 1 group)
-        } else {
-            System.out.println("STOP AND RERUN!");
-        }
+        studentsCount++;
+        this.physicsMark = physicsMark;
     }
 
-    //set mark
     public void setMathMark(int mathMark) {
-        if (mathMark >= 0 && mathMark < 6) {
-            this.mathMark = mathMark;
-        } else {
-            System.out.println("STOP AND RERUN!");
-        }
+        this.mathMark = mathMark;
     }
 
-    //set mark
     public void setItMark(int itMark) {
-        if (itMark >= 0 && itMark < 6) {
-            this.itMark = itMark;
-            this.studentsCount++;
-        } else {
-            System.out.println("STOP AND RERUN!");
-        }
+        this.itMark = itMark;
     }
 
-    //objects count(now)
     public static int getStudentsCount() {
         return studentsCount;
     }
 
-    //count average
-    public static float getAveragePhysicsMark() {
-        return (averagePhysicsMark / studentsCount); //for 1 group
-    }
-
-    //get phys mark
     public int getPhysicsMark() {
         return physicsMark;
     }
 
-    //display all info about student
-    public void displayFullInfo() {
-        System.out.println(lastName + " info:");
-        System.out.println("Year of birth -> " + yearOfBirth);
-        System.out.println("Group -> " + group);
-        System.out.println("Math mark -> " + mathMark);
-        System.out.println("Physics mark -> " + physicsMark);
-        System.out.println("IT mark -> " + itMark);
+    public String getLastName() {
+        return lastName;
+    }
+
+    public int getYearOfBirth() {
+        return yearOfBirth;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public int getMathMark() {
+        return mathMark;
+    }
+
+    public int getItMark() {
+        return itMark;
+    }
+
+    @Override
+    public String toString() {
+        return this.getLastName() + " info:" +
+                "\nYear of birth -> " + this.getYearOfBirth() +
+                "\nGroup -> " + this.getGroup() +
+                "\nMath mark -> " + this.getMathMark() +
+                "\nPhysics mark -> " + this.getPhysicsMark() +
+                "\nIT mark -> " + this.getItMark()+"\n";
     }
 }

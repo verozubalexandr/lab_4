@@ -1,7 +1,7 @@
 package com.company;
 
-import java.util.Scanner;
 import java.time.LocalDate;
+import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Main {
@@ -31,21 +31,20 @@ public class Main {
         Student[] students = new Student[]{student1, student2, student3};
 
         //fill info
-        for (int i = 0; i < students.length; i++) {
-            fillStudentInfo(students[i]);
-        }
+        for (Student student : students)
+            fillStudentInfo(student);
 
         //result
-        for (int i = 0; i < students.length; i++) {
-            students[i].displayFullInfo();
-        }
+        for (Student student : students)
+            System.out.println(student);
+
         System.out.println("Average physics mark of all students -> " + averagePhysicsMark(students));
     }
 
     /**
      * Определить количество сотрудников пенсионного возраста
      * (мужчинам больше 65-ти лет, женщинам - 60).
-     *
+     * <p>
      * Дано:
      * Фамилия
      * Имя
@@ -53,62 +52,109 @@ public class Main {
      * Должность
      * Пол
      * Дата приёма на работу
-     * */
+     */
     private static void task2() {
         //create
         Employee employee1 = new Employee();
         Employee employee2 = new Employee();
-        Employee[] employees = new Employee[] { employee1, employee2 };
-        for (int i = 0; i < employees.length; i++) {
-            fillEmployeeInfo(employees[i]);
-        }
+        Employee[] employees = new Employee[]{employee1, employee2};
+
+        for (Employee employee : employees)
+            fillEmployeeInfo(employee);
 
         //result
-        for (int i = 0; i < employees.length; i++) {
-            employees[i].displayFullInfo();
-        }
+        for (Employee employee : employees)
+            System.out.println(employee);
+
         System.out.println("Pensioners -> " + countPensioners(employees));
     }
 
     //fill student info
     private static void fillStudentInfo(Student student) {
+        int integer;
+        String string = "";
         System.out.println("Enter information about student #" + (Student.getStudentsCount() + 1));
-        student.setGroup(enterString("group").toUpperCase().replaceAll("\\s+", ""));
-        student.setLastName(enterString("last name").toUpperCase().replaceAll("\\s+", ""));
-        student.setYearOfBirth(enterInteger("year of birth"));
-        student.setMathMark(enterInteger("math mark"));
-        student.setPhysicsMark(enterInteger("physics mark"));
-        student.setItMark(enterInteger("IT mark"));
+
+        do
+            string = enterString("group").toUpperCase().replaceAll("\\s+", "");
+        while (!Utilities.isCorrectGroup(string));
+        student.setGroup(string);
+
+        do
+            string = enterString("last name").replaceAll("\\s+", "");
+        while (!Utilities.isCorrectName(string));
+        student.setLastName(string);
+
+        do
+            integer = enterInteger("year of birth");
+        while (!Utilities.isCorrectYearOfBirth(integer));
+        student.setYearOfBirth(integer);
+
+        do
+            integer = enterInteger("math mark");
+        while (!Utilities.isCorrectMark(integer));
+        student.setMathMark(integer);
+
+        do
+            integer = enterInteger("it mark");
+        while (!Utilities.isCorrectMark(integer));
+        student.setItMark(integer);
+
+        do
+            integer = enterInteger("phys mark");
+        while (!Utilities.isCorrectMark(integer));
+        student.setPhysicsMark(integer);
     }
 
     //average physics mark
-    private static float averagePhysicsMark (Student[] students) {
+    private static float averagePhysicsMark(Student[] students) {
         float average = 0;
-        for (int i = 0; i < students.length; i++) {
-            average += students[i].getPhysicsMark();
-        }
+        for (Student student : students)
+            average += student.getPhysicsMark();
         return (average / (students.length));
     }
 
     //fill employee info
     private static void fillEmployeeInfo(Employee employee) {
-        employee.setAge(enterInteger("age"));
+        String string = "";
+        int integer;
+
+        do
+            integer = enterInteger("age");
+        while (!Utilities.isCorrectAge(integer));
+        employee.setAge(integer);
+
         employee.setGender(randomGender());
-        employee.setFirstName(enterString("first name").toUpperCase().replaceAll("\\s+", ""));
-        employee.setLastName(enterString("last name").toUpperCase().replaceAll("\\s+", ""));
-        employee.setPatronymic(enterString("patronymic").toUpperCase().replaceAll("\\s+", ""));
+
+        do
+            string = enterString("first name").replaceAll("\\s+", "");
+        while (!Utilities.isCorrectName(string));
+        employee.setFirstName(string);
+
+        do
+            string = enterString("last name").replaceAll("\\s+", "");
+        while (!Utilities.isCorrectName(string));
+        employee.setLastName(string);
+
+        do
+            string = enterString("patronymic").replaceAll("\\s+", "");
+        while (!Utilities.isCorrectName(string));
+        employee.setPatronymic(string);
+
         employee.setPosition(randomPosition());
-        employee.setEmploymentDate(String.valueOf(LocalDate.ofEpochDay(ThreadLocalRandom.current().nextInt(40 * 365, 50 * 365))));
+
+        employee.setEmploymentDate(LocalDate.ofEpochDay(ThreadLocalRandom.current().nextInt(40 * 365, 50 * 365)));
     }
 
     //count pensioners
     private static int countPensioners(Employee[] employees) {
         int pensionersCounter = 0;
-        for (int i = 0; i < employees.length; i++) {
-            if (((employees[i].getAge() > 65) && (employees[i].getGender() == Gender.MALE)) || ((employees[i].getAge() > 60) && (employees[i].getGender() == Gender.FEMALE))) {
+
+        for (Employee employee : employees)
+            if (((employee.getAge() > 65) && (employee.getGender() == Gender.MALE)) ||
+                    ((employee.getAge() > 60) && (employee.getGender() == Gender.FEMALE)))
                 pensionersCounter++;
-            }
-        }
+
         return pensionersCounter;
     }
 
@@ -129,11 +175,9 @@ public class Main {
 
     //random gender
     private static Gender randomGender() {
-        if (1 + ((int) (Math.random() * 2)) == 1) {
+        if (1 + ((byte) (Math.random() * 2)) == 1)
             return Gender.MALE;
-        } else {
-            return Gender.FEMALE;
-        }
+        return Gender.FEMALE;
     }
 
     //enter string with hint
