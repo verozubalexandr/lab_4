@@ -25,20 +25,25 @@ public class Main {
      */
     private static void task1() {
         //create
-        Student student1 = new Student();
-        Student student2 = new Student();
-        Student student3 = new Student();
-        Student[] students = new Student[]{student1, student2, student3};
+        final byte STUDENTS_NUM = 3;
+        final Student student1 = new Student();
+        final Student student2 = new Student();
+        final Student student3 = new Student();
 
-        //fill info
-        for (Student student : students)
-            fillStudentInfo(student);
+        final Students students = new Students(STUDENTS_NUM);
 
-        //result
-        for (Student student : students)
-            System.out.println(student);
+        students.addStudent(student1);
+        students.addStudent(student2);
+        students.addStudent(student3);
 
-        System.out.println("Average physics mark of all students -> " + averagePhysicsMark(students));
+        for(byte i = 0; i < STUDENTS_NUM; i++)
+            fillStudentInfo(students.getStudent(i));
+        System.out.println();
+
+        for(byte i = 0; i < STUDENTS_NUM; i++)
+            System.out.println(students.getStudent(i));
+
+        System.out.println("Average physics mark of all students -> " + Students.averagePhysicsMark(students, STUDENTS_NUM));
     }
 
     /**
@@ -55,24 +60,29 @@ public class Main {
      */
     private static void task2() {
         //create
-        Employee employee1 = new Employee();
-        Employee employee2 = new Employee();
-        Employee[] employees = new Employee[]{employee1, employee2};
+        final byte EMPLOYEE_NUM = 2;
+        final Employee employee1 = new Employee();
+        final Employee employee2 = new Employee();
 
-        for (Employee employee : employees)
-            fillEmployeeInfo(employee);
+        final Employees employees = new Employees(EMPLOYEE_NUM);
 
-        //result
-        for (Employee employee : employees)
-            System.out.println(employee);
+        employees.addEmployee(employee1);
+        employees.addEmployee(employee2);
 
-        System.out.println("Pensioners -> " + countPensioners(employees));
+        for(byte i = 0; i < EMPLOYEE_NUM; i++)
+            fillEmployeeInfo(employees.getEmployee(i));
+        System.out.println();
+
+        for (byte i = 0; i < EMPLOYEE_NUM; i++)
+            System.out.println(employees.getEmployee(i));
+
+        System.out.println("Pensioners -> " + Employees.countPensioners(employees, EMPLOYEE_NUM));
     }
 
     //fill student info
-    private static void fillStudentInfo(Student student) {
+    public static void fillStudentInfo(Student student) {
         int integer;
-        String string = "";
+        String string;
         System.out.println("Enter information about student #" + (Student.getStudentsCount() + 1));
 
         do
@@ -106,17 +116,9 @@ public class Main {
         student.setPhysicsMark(integer);
     }
 
-    //average physics mark
-    private static float averagePhysicsMark(Student[] students) {
-        float average = 0;
-        for (Student student : students)
-            average += student.getPhysicsMark();
-        return (average / (students.length));
-    }
-
     //fill employee info
     private static void fillEmployeeInfo(Employee employee) {
-        String string = "";
+        String string;
         int integer;
 
         do
@@ -146,26 +148,12 @@ public class Main {
         employee.setEmploymentDate(LocalDate.ofEpochDay(ThreadLocalRandom.current().nextInt(40 * 365, 50 * 365)));
     }
 
-    //count pensioners
-    private static int countPensioners(Employee[] employees) {
-        int pensionersCounter = 0;
-
-        for (Employee employee : employees)
-            if (((employee.getAge() > 65) && (employee.getGender() == Gender.MALE)) ||
-                    ((employee.getAge() > 60) && (employee.getGender() == Gender.FEMALE)))
-                pensionersCounter++;
-
-        return pensionersCounter;
-    }
-
     //random position
     private static Position randomPosition() {
         byte randomValue = ((byte) ((Math.random()) * 4));
         switch (randomValue) {
             case 1:
                 return Position.SALESMAN;
-            case 2:
-                return Position.MANAGER;
             case 3:
                 return Position.GENERAL_MANAGER;
             default:

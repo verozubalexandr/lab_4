@@ -99,7 +99,8 @@ public class Employee {
 
         return "\nFirst name -> " + this.getFirstName() +
                 "\nLast name -> " + this.getLastName() +
-                "\nPatronymic -> " + this.getPatronymic() + "\n" + string +
+                "\nPatronymic -> " + this.getPatronymic() +
+                "\nAge -> " + this.getAge() + "\n" + string +
                 "\nGender -> " + ("" + this.getGender()).toLowerCase() +
                 "\nEmployment date -> " + this.getEmploymentDate();
     }
