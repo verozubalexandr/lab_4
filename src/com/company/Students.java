@@ -14,14 +14,14 @@ public class Students {
             students[currentStudentNumber] = student;
     }
 
-    public Student getStudent(byte index) {
+    public final Student getStudent(byte index) {
         return students[index];
     }
 
-    public static float averagePhysicsMark(Students students, final byte STUDENTS_NUM) {
-      float average = 0;
-      for (byte i = 0; i < STUDENTS_NUM; i++)
-          average += students.getStudent(i).getPhysicsMark();
-      return (average / STUDENTS_NUM);
+    public float averagePhysicsMark() {
+        float average = 0;
+        for (byte i = 0; i < this.students.length; i++)
+            average += getStudent(i).getPhysicsMark();
+        return (average / this.students.length);
     }
 }

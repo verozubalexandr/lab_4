@@ -14,16 +14,16 @@ public class Employees {
             employees[currentEmployeeNumber] = employee;
     }
 
-    public Employee getEmployee(byte index) {
+    public final Employee getEmployee(byte index) {
         return employees[index];
     }
 
-    public static int countPensioners(final Employees employees, final byte EMPLOYEE_NUM) {
+    public int countPensioners() {
         int pensionersCounter = 0;
 
-        for (byte i = 0; i < 2; i++)
-            if (((employees.getEmployee(i).getAge() > 65) && (employees.getEmployee(i).getGender() == Gender.MALE)) ||
-                    ((employees.getEmployee(i).getAge() > 60) && (employees.getEmployee(i).getGender() == Gender.FEMALE)))
+        for (byte i = 0; i < this.employees.length; i++)
+            if (((getEmployee(i).getAge() > 65) && (getEmployee(i).getGender() == Gender.MALE)) ||
+                    ((getEmployee(i).getAge() > 60) && (getEmployee(i).getGender() == Gender.FEMALE)))
                 pensionersCounter++;
         return pensionersCounter;
     }

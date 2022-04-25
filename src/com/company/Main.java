@@ -7,14 +7,14 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Main {
     public static void main(String[] args) {
         //task1();
-        //task2();
+        task2();
     }
 
     /**
      * Вычислить средний балл оценок студентов по физике
      * и напечатать фамилии, год рождения и оценки по
      * информатике всех студентов.
-     * 
+     * <p>
      * Дано:
      * Фамилия;
      * Группа;
@@ -36,14 +36,14 @@ public class Main {
         students.addStudent(student2);
         students.addStudent(student3);
 
-        for(byte i = 0; i < STUDENTS_NUM; i++)
+        for (byte i = 0; i < STUDENTS_NUM; i++)
             fillStudentInfo(students.getStudent(i));
         System.out.println();
 
-        for(byte i = 0; i < STUDENTS_NUM; i++)
+        for (byte i = 0; i < STUDENTS_NUM; i++)
             System.out.println(students.getStudent(i));
 
-        System.out.println("Average physics mark of all students -> " + Students.averagePhysicsMark(students, STUDENTS_NUM));
+        System.out.println("Average physics mark of all students -> " + students.averagePhysicsMark());
     }
 
     /**
@@ -69,14 +69,14 @@ public class Main {
         employees.addEmployee(employee1);
         employees.addEmployee(employee2);
 
-        for(byte i = 0; i < EMPLOYEE_NUM; i++)
+        for (byte i = 0; i < EMPLOYEE_NUM; i++)
             fillEmployeeInfo(employees.getEmployee(i));
         System.out.println();
 
         for (byte i = 0; i < EMPLOYEE_NUM; i++)
             System.out.println(employees.getEmployee(i));
 
-        System.out.println("Pensioners -> " + Employees.countPensioners(employees, EMPLOYEE_NUM));
+        System.out.println("Pensioners -> " + employees.countPensioners());
     }
 
     //fill student info
